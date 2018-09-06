@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+	<title>Particules</title>
+	<meta charset="utf-8">
+	<style>
+		
+	*{
+		top:0;
+		left:0;
+	}
+	body{
+	}
+	#airedejeu{
+		position:absolute;
+		background-color: black;
+	}
+	</style>
+
+</head>
+
+<body>
+	<p>ajout d'un p pour test alex</p>
+	<canvas id="airedejeu">Arretez d'utiliser Internet explorer</canvas>
+
+	<script>
+		
+			var canvas= document.getElementById('airedejeu');
+			var ctx= canvas.getContext('2d');
+			canvas.width= 1920;
+			canvas.height= 1080;
+			var nuage= [];
+			var posX= canvas.width/2;
+			var posY= canvas.height/2;
+			for (var i = 0; i < 200; i++) {
+				nuage[i]= new Particule();
+			}
+			function draw(){
+				ctx.clearRect(0,0, canvas.width, canvas.height);
+				for (var i = 0; i < 200; i++) {
+					nuage[i].draw();
+                    nuage[i].bouge();
+                    
+				};
+				window.requestAnimationFrame(draw);
+			}
+		
+			function Particule(){
+				this.x= posX;
+				this.y= posY;
+				this.width= 5;
+                this.height= 5;
+				this.vx= Math.random();
+				this.vy= Math.random();
+				this.color= 'purple';
+				this.draw= function(){
+                    ctx.save();
+                    ctx.fillStyle= this.color;
+                    ctx.rotate((Math.PI/180)*25);
+                    ctx.fillRect(this.x, this.y, this.width, this.height);
+                    ctx.translate(300,-40);
+                    ctx.fill();
+                    //ctx.translate(-300,400);
+				};
+				this.bouge= function(){
+					
+					if ((this.x >= canvas.width) && (this.y >= canvas.height)){
+						this.x = canvas.width/2;
+                        this.y = canvas.height/2;
+                        
+                    };
+                    this.x += 2;
+					this.y += 2;
+				};
+			}
+			window.requestAnimationFrame(draw);
+	</script>
+
+</body>
+
+</html>
